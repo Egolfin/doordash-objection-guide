@@ -24,7 +24,15 @@ function renderDetail(){
  if(s&&stage>=3){d.append(el('p',`Selected path: ${s.title}`,'hint'));
   if(stage===3){d.append(box('Acknowledge the specific concern',s.ack),listBox('Ask the questions you need',s.questions,'discovery'),el('p','Pause after each question and listen. You do not need to ask every question.','hint'));}
   if(stage===4)d.append(box('Summarize and confirm',s.confirm),el('p','Replace the placeholder with the merchant’s actual concern. If they correct you, go back to discovery.','hint'));
-  if(stage===5)d.append(box('Address the concern',s.rebuttal),el('p','Connect the response to what the merchant said. Confirm account details before discussing costs or results.','hint'));
+  if(stage===5){
+   d.append(box('Address the concern',s.rebuttal));
+   if(current===3){
+    const tool=box('Review the numbers together',"Let's use your sales, commission rate, and marketing spend for the same period to calculate what remains after those two costs. Then let's subtract food, packaging, labor, other fees, and operating expenses to assess your actual profit.",'discovery');
+    const link=el('a','Open Profit Calculator ↗');link.href='https://egolfin.github.io/Profit_Calculator-V1/';link.target='_blank';link.rel='noopener noreferrer';link.style.color='var(--teal)';link.style.display='inline-block';link.style.marginTop='12px';tool.append(link);
+    tool.append(el('p','The calculator shows the remaining amount after commission and marketing, not net profit. Use matching dates and avoid counting the same marketing costs twice.','hint'));d.append(tool);
+   }
+   d.append(el('p','Connect the response to what the merchant said. Confirm account details before discussing costs or results.','hint'));
+  }
   if(stage===6)d.append(box('Propose a useful next step',s.closing,'closing'),el('p','Let the merchant decide. Respect a decline and agree on a follow-up only if they want one.','hint'));
  }
  const actions=el('div',undefined,'actions');
